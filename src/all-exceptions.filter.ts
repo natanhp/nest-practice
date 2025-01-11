@@ -7,6 +7,7 @@ import {
 import { BaseExceptionFilter } from '@nestjs/core';
 import { MyLoggerService } from './my-logger/my-logger.service';
 import { PrismaClientValidationError } from '@prisma/client/runtime/library';
+import { FastifyReply } from 'fastify';
 
 type MyResponseOjb = {
   statusCode: number;
@@ -21,7 +22,7 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
 
   catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse();
+    const response = ctx.getResponse<FastifyReply>();
     const request = ctx.getRequest();
 
     const myResponseOjb: MyResponseOjb = {
@@ -42,7 +43,7 @@ export class AllExceptionsFilter extends BaseExceptionFilter {
       myResponseOjb.response = 'Internal Server Error';
     }
 
-    response.status(myResponseOjb.statusCode).json(myResponseOjb);
+    response.status(myResponseOjb.statusCode).send(myResponseOjb);
     this.logger.error(myResponseOjb.response, AllExceptionsFilter.name);
     super.catch(exception, host);
   }
