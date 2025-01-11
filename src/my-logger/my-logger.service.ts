@@ -2,6 +2,7 @@ import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs';
 import { promises as fsPromises } from 'fs';
+import e from 'express';
 
 @Injectable()
 export class MyLoggerService extends ConsoleLogger {
@@ -20,16 +21,17 @@ export class MyLoggerService extends ConsoleLogger {
       if (e instanceof Error) console.error(e.message);
     }
   }
+
   log(message: any, context?: string) {
-    const entry = `${context}\t${message}`;
+    const entry = `${context}\t${JSON.stringify(message)}`;
 
     this.logToFile(entry);
 
     super.log(message, context);
   }
 
-  error(message: any, stackOrContext?: string) {
-    const entry = `${stackOrContext}\t${message}`;
+  error(message: any, stackOrContext?: any) {
+    const entry = `${stackOrContext}\t${JSON.stringify(message)}`;
 
     this.logToFile(entry);
 
