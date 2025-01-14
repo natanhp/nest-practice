@@ -8,11 +8,12 @@ import {
   Delete,
   Query,
   Ip,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Prisma } from '@prisma/client';
 import { SkipThrottle, Throttle } from '@nestjs/throttler';
-import { MyLoggerService } from 'src/my-logger/my-logger.service';
+import { MyLoggerService } from '../my-logger/my-logger.service';
 
 @SkipThrottle()
 @Controller('employees')
@@ -21,13 +22,13 @@ export class EmployeesController {
   private readonly logger = new MyLoggerService(EmployeesController.name);
 
   @Post()
-  create(@Body() createEmployeeDto: Prisma.EmployeeCreateInput) {
+  async create(@Body() createEmployeeDto: Prisma.EmployeeCreateInput) {
     return this.employeesService.create(createEmployeeDto);
   }
 
   @SkipThrottle({ default: false })
   @Get()
-  findAll(
+  async findAll(
     @Ip() ip: string,
     @Query('role') role?: 'INTERN' | 'ENGINEER' | 'ADMIN',
   ) {
@@ -41,20 +42,20 @@ export class EmployeesController {
 
   @Throttle({ short: { ttl: 1000, limit: 1 } })
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.employeesService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.employeesService.findOne(id);
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
+  async update(
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateEmployeeDto: Prisma.EmployeeUpdateInput,
   ) {
-    return this.employeesService.update(+id, updateEmployeeDto);
+    return this.employeesService.update(id, updateEmployeeDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.employeesService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return this.employeesService.remove(id);
   }
 }
