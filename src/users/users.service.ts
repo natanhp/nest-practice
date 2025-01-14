@@ -44,6 +44,8 @@ export class UsersService {
       if (rolesArray.length === 0) {
         throw new NotFoundException('Role not found');
       }
+
+      return rolesArray;
     }
     return this.users;
   }
