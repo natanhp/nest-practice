@@ -24,7 +24,13 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a practice repository for exploring REST API development using Nest.js. This project is based on the following tutorials:
+
+1. Nest.js Full Course for Beginners | Complete All-in-One Tutorial | 3 Hours by Dave Gray
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/8_X0nSrzrCw?si=zPS3-qj-XxcMS17F" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+2. NestJS Testing Tutorial | Unit and Integration Testing by Marius Espejo
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/dXOfOgFFKuY?si=5MD9CgxxaZ-j-yII" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## Project setup
 
